@@ -30,21 +30,41 @@ var requestHandler = function(request, response) {
   console.log("Serving request type " + request.method + " for url " + request.url);
 
   // The outgoing status.
-  var statusCode = 200;
 
+// response.statusCode = 200;
+console.log(response.statusCode);
   // See the note below about CORS headers.
   var headers = defaultCorsHeaders;
 
+if(request.method === 'GET'){
+  console.log('This is statusCode before if', response.statusCode);
+  response.statusCode = 200;
+  console.log('This is statusCode after if', response.statusCode);
+
+}  
+
+// response(response.url, function(GET, response, body){
+  
+
+//   return statusCode;
+// })
   // Tell the client we are sending them plain text.
   //
   // You will need to change this if you are sending something
   // other than plain text, like JSON or HTML.
-  headers['Content-Type'] = "text/plain";
+  headers['Content-Type'] = "text/JSON";
 
   // .writeHead() writes to the request line and headers of the response,
   // which includes the status and all headers.
-  response.writeHead(statusCode, headers);
-
+  console.log('What is response?', response);
+  console.log('What is request?', request);
+  console.log('This is what statusCode is', response.statusCode);
+ response.writeHead(response.statusCode, headers);
+  
+  // if(request.method === 'GET'){
+  // response.writeHead('/log', statusCode)
+    
+  // }
   // Make sure to always call response.end() - Node may not send
   // anything back to the client until you do. The string you pass to
   // response.end() will be the body of the response - i.e. what shows
@@ -54,6 +74,14 @@ var requestHandler = function(request, response) {
   // node to actually send all the data over to the client.
   response.end("Hello, World!");
 };
+
+
+//Process the type of request
+
+//based on request send a response with a status code of 200
+
+
+
 
 // These headers will allow Cross-Origin Resource Sharing (CORS).
 // This code allows this server to talk to websites that
@@ -70,4 +98,23 @@ var defaultCorsHeaders = {
   "access-control-allow-headers": "content-type, accept",
   "access-control-max-age": 10 // Seconds.
 };
+exports.requestHandler = requestHandler;
+
+
+
+    // OK: 200,
+    // created: 201,
+    // accepted: 202,
+    // badRequest: 400,
+    // unauth: 401,
+    // forbidden: 403,
+    // notFound: 404,
+    // requestTimeout: 408
+
+
+
+
+
+
+
 
