@@ -30,7 +30,7 @@ var requestHandler = function(request, response) {
   console.log("Serving request type " + request.method + " for url " + request.url);
 
   // console.log("this is reponse", response);
-  //console.log("this is request", request);
+  // console.log("this is request", request);
   // The outgoing status.
   var statusCode = 200;
 
@@ -44,16 +44,28 @@ var requestHandler = function(request, response) {
   headers['Content-Type'] = "text/plain";
 
   // .writeHead() writes to the request line and headers of the response,
+  var resArray = [];
 
   if (request.method === 'GET'){
     statusCode = 200;
   }
   if(request.method === 'POST'){
     statusCode = 201;
+    resArray.push(JSON.stringify(request._postData));
   }
+  // var fs = require('fs');
+  // fs.exists(request.url, function (exists) {
+  // if (!exists) {
+  //   statusCode = 404;
+  // }
+// });
+
+  
+   // console.log('This is resArray ', resArray);
+  // console.log('This is resArray at 0', resArray[0].username);
+  // console.log('This is dah POWT DATUH!', request._postData);
   // which includes the status and all headers.
   response.writeHead(statusCode, headers);
-
   // Make sure to always call response.end() - Node may not send
   // anything back to the client until you do. The string you pass to
   // response.end() will be the body of the response - i.e. what shows
@@ -61,7 +73,9 @@ var requestHandler = function(request, response) {
  
   // Calling .end "flushes" the response's internal buffer, forcing
   // node to actually send all the data over to the client.
-  response.end(JSON.stringify({ text:"Hello, World!", results: [] }));
+  var test = JSON.stringify({ username:'' , message:'', results: resArray });
+  // console.log('What is the type of test', typeof test.results);
+  response.end(JSON.stringify({ username:'' , message:'', results: resArray }));
 };
 
 // These headers will allow Cross-Origin Resource Sharing (CORS).
