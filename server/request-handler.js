@@ -45,8 +45,11 @@ var requestHandler = function(request, response) {
 
   // .writeHead() writes to the request line and headers of the response,
 
-  if (response.method === 'GET'){
+  if (request.method === 'GET'){
     statusCode = 200;
+  }
+  if(request.method === 'POST'){
+    statusCode = 201;
   }
   // which includes the status and all headers.
   response.writeHead(statusCode, headers);
@@ -58,7 +61,7 @@ var requestHandler = function(request, response) {
  
   // Calling .end "flushes" the response's internal buffer, forcing
   // node to actually send all the data over to the client.
-  response.end(JSON.stringify({text:"Hello, World!"}));
+  response.end(JSON.stringify({ text:"Hello, World!", results: [] }));
 };
 
 // These headers will allow Cross-Origin Resource Sharing (CORS).

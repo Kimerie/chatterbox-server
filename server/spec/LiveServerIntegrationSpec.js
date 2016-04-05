@@ -19,7 +19,7 @@ describe('server', function() {
   it('should send back an object', function(done) {
     request('http://127.0.0.1:3000/classes/messages', function(error, response, body) {
       console.log('What is the body ', body)
-      
+
       parsedBody = JSON.parse(body);
       expect(parsedBody).to.be.an('object');
       done();
